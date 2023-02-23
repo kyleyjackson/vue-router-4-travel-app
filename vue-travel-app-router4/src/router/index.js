@@ -1,10 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import Brazil from '../views/Brazil.vue'
-import Panama from '../views/Panama.vue'
-import Jamaica from '../views/Jamaica.vue'
-import Hawaii from '../views/Hawaii.vue'
 
 const routes = [
     {
@@ -14,39 +9,38 @@ const routes = [
     },
 
     {
-        path: '/about',
-        name: 'About',
-        component: About
-    },
-
-    {
         path: '/brazil',
         name: 'Brazil',
-        component: Brazil
+        component: () => import('../views/Brazil.vue')
     },
 
     {
         path: '/panama',
         name: 'Panama',
-        component: Panama
-    },
-
-    {
-        path: '/jamaica',
-        name: 'Jamaica',
-        component: Jamaica
+        component: () => import('../views/Panama.vue')
     },
 
     {
         path: '/hawaii',
         name: 'Hawaii',
-        component: Hawaii
+        component: () => import('../views/Hawaii.vue')
+    },
+
+    {
+        path: '/jamaica',
+        name: 'Jamaica',
+        component: () => import('../views/Jamaica.vue')
+    },
+    { //Dynamic routing
+        path: '/destination/:id',
+        component: () => import('../views/DestinationShow.vue')
     }
 ]
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
+    linkActiveClass: 'nav-active-link' // Replacing the current link active class with one of our own 
 })
 
 export default router
