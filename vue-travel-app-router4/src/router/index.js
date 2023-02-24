@@ -8,31 +8,9 @@ const routes = [
         component: Home
     },
 
-    {
-        path: '/brazil',
-        name: 'Brazil',
-        component: () => import('../views/Brazil.vue')
-    },
-
-    {
-        path: '/panama',
-        name: 'Panama',
-        component: () => import('../views/Panama.vue')
-    },
-
-    {
-        path: '/hawaii',
-        name: 'Hawaii',
-        component: () => import('../views/Hawaii.vue')
-    },
-
-    {
-        path: '/jamaica',
-        name: 'Jamaica',
-        component: () => import('../views/Jamaica.vue')
-    },
     { //Dynamic routing
-        path: '/destination/:id',
+        path: '/destination/:id/:slug',
+        name: 'destination.show',
         component: () => import('../views/DestinationShow.vue')
     }
 ]
