@@ -12,10 +12,16 @@
 import sourceData from '../data.json'
 
 export default {
+    props: {
+        id: {
+            type: Number, 
+            required: true
+        }
+    },
 
     computed: {
         destination() {
-            return sourceData.destinations.find((destination)=> destination.id == parseInt(this.$route.params.id))
+            return sourceData.destinations.find((destination) => destination.id === this.id)
         }
     },
 }
