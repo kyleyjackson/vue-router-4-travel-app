@@ -9,12 +9,38 @@ const routes = [
         component: Home
     },
 
+    {
+        path: '/protected',
+        name: 'protected',
+        component: () => import('../views/Protected.vue'),
+
+        meta: {
+          requiresAuth: true,
+        }
+      },
+
+      {
+        path: '/login',
+        name: 'login',
+        component: () => import('../views/Login.vue')
+      },
+
+      {
+        path: '/invoices',
+        name: 'invoices',
+        component: () => import('../views/Invoices.vue'),
+
+        meta: {
+            requiresAuth: true
+        }
+      },
+
     { //Dynamic routing
         path: '/destination/:id/:slug',
         name: 'destination.show',
         component: () => import('../views/DestinationShow.vue'),
         props: route => ({...route.params, id: parseInt(route.params.id)}),
-        beforeEnter(to, from) {
+        beforeEnter(to, from) { // 404 not found page
             const exists = sourceData.destinations.find(
                 destination => destination.id === parseInt(to.params.id)
             )
@@ -54,8 +80,14 @@ const router = createRouter({
     linkActiveClass: 'nav-active-link', // Replacing the current link active class with one of our own 
     scrollBehavior (to, from, savedPosition) {
         return savedPosition || new Promise((resolve) => {
-            setTimeout(() => resolve({ top: 0, behaviour: 'smooth' }), 300)
+            setTimeout(() => resolve({ top: 0, behaviour: 'smooth' }), 300) //Telling the server to wait 300ms before scrolling back to the top of a new page
         })
+    }
+})
+
+router.beforeEach((to, from) => {
+    if(to.meta.requiresAuth && !window.user) {
+        return {name: 'login', query: { redirect: to.fullPath }}
     }
 })
 
